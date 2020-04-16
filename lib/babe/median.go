@@ -59,15 +59,13 @@ func (b *Session) estimateCurrentSlot() (uint64, error) {
 
 // getCurrentSlot estimates the current slot, then uses the slotTime algorithm to determine the exact slot
 func (b *Session) getCurrentSlot() (uint64, error) {
-	estimate, err := b.estimateCurrentSlot()
-	if err != nil {
-		return 0, err
-	}
+	estimate := b.startSlot
 
 	for {
 		slotTime, err := b.slotTime(estimate, slotTail)
 		if err != nil {
-			return 0, err
+			//return 0, err
+			continue
 		}
 
 		if slotTime > uint64(time.Now().Unix())-(b.config.SlotDuration/1000) {
