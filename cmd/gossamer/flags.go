@@ -47,10 +47,10 @@ var (
 
 // Global node configuration flags
 var (
-	// VerbosityFlag cli service settings
-	VerbosityFlag = cli.StringFlag{
-		Name:  "verbosity",
-		Usage: "Supports levels crit (silent) to trce (trace)",
+	// LogFlag cli service settings
+	LogFlag = cli.StringFlag{
+		Name:  "log",
+		Usage: "Supports levels from crit (silent) to trce (trace)",
 		Value: log.LvlInfo.String(),
 	}
 	// NameFlag node implementation name
@@ -180,7 +180,7 @@ var (
 var (
 	// GlobalFlags are flags that are valid for use with the root command and all subcommands
 	GlobalFlags = []cli.Flag{
-		VerbosityFlag,
+		LogFlag,
 		NameFlag,
 		ChainFlag,
 		ConfigFlag,
@@ -252,21 +252,21 @@ func FixFlagOrder(f func(ctx *cli.Context) error) func(*cli.Context) error {
 
 			// check if flag is set as global or local flag
 			if ctx.GlobalIsSet(flagName) {
-				// log global flag if verbosity equals trace
-				if ctx.String(VerbosityFlag.Name) == trace {
+				// log global flag if log equals trace
+				if ctx.String(LogFlag.Name) == trace {
 					log.Trace("[cmd] global flag set", "name", flagName)
 				}
 			} else if ctx.IsSet(flagName) {
 				// check if global flag using set as global flag
 				err := ctx.GlobalSet(flagName, ctx.String(flagName))
 				if err == nil {
-					// log fixed global flag if verbosity equals trace
-					if ctx.String(VerbosityFlag.Name) == trace {
+					// log fixed global flag if log equals trace
+					if ctx.String(LogFlag.Name) == trace {
 						log.Trace("[cmd] global flag fixed", "name", flagName)
 					}
 				} else {
-					// if not global flag, log local flag if verbosity equals trace
-					if ctx.String(VerbosityFlag.Name) == trace {
+					// if not global flag, log local flag if log equals trace
+					if ctx.String(LogFlag.Name) == trace {
 						log.Trace("[cmd] local flag set", "name", flagName)
 					}
 				}
