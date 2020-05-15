@@ -199,6 +199,12 @@ func setDotAccountConfig(ctx *cli.Context, cfg *dot.AccountConfig) {
 
 // setDotCoreConfig sets dot.CoreConfig using flag values from the cli context
 func setDotCoreConfig(ctx *cli.Context, cfg *dot.CoreConfig) {
+	// check --validator flag and update node configuration
+	if validator := ctx.GlobalBool(ValidatorFlag.Name); validator {
+		cfg.Authority = true
+		cfg.Roles = byte(4)
+	}
+
 	// check --roles flag and update node configuration
 	if roles := ctx.GlobalString(RolesFlag.Name); roles != "" {
 		// convert string to byte

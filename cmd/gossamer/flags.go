@@ -43,6 +43,11 @@ var (
 		Name:  "roles",
 		Usage: "Roles of the gossamer node",
 	}
+	// ValidatorFlag used to set authority node (same as --roles 4 --key alice) - needed for polkadot deployer
+	ValidatorFlag = cli.BoolFlag{
+		Name:  "validator",
+		Usage: "Whether or not the node is a validator node (same as --roles 4 --key alice)",
+	}
 )
 
 // Global node configuration flags
@@ -193,11 +198,14 @@ var (
 		KeyFlag,
 		UnlockFlag,
 
+		// core flags
+		RolesFlag,
+		ValidatorFlag,
+
 		// network flags
 		PortFlag,
 		BootnodesFlag,
 		ProtocolFlag,
-		RolesFlag,
 		NoBootstrapFlag,
 		NoMDNSFlag,
 
