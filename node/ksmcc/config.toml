@@ -1,7 +1,7 @@
 [global]
 name = "ksmcc"
 id = "ksmcc"
-datadir = "~/.gossamer/ksmcc"
+base-dir = "~/.gossamer/ksmcc"
 
 [init]
 genesis = "./node/ksmcc/genesis.json"

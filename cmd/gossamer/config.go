@@ -165,16 +165,16 @@ func setDotGlobalConfig(ctx *cli.Context, cfg *dot.GlobalConfig) {
 		cfg.ID = id
 	}
 
-	// check --datadir flag and update node configuration
-	if datadir := ctx.GlobalString(DataDirFlag.Name); datadir != "" {
-		cfg.DataDir = datadir
+	// check --base-dir flag and update node configuration
+	if basedir := ctx.GlobalString(BaseDirFlag.Name); basedir != "" {
+		cfg.BaseDir = basedir
 	}
 
 	log.Debug(
 		"[cmd] global configuration",
 		"name", cfg.Name,
 		"id", cfg.ID,
-		"datadir", cfg.DataDir,
+		"basedir", cfg.BaseDir,
 	)
 }
 
@@ -387,7 +387,7 @@ func updateDotConfigFromGenesisJSON(ctx *cli.Context, cfg *dot.Config) {
 func updateDotConfigFromGenesisData(ctx *cli.Context, cfg *dot.Config) error {
 
 	// initialize database using data directory
-	db, err := database.NewBadgerDB(cfg.Global.DataDir)
+	db, err := database.NewBadgerDB(cfg.Global.BaseDir)
 	if err != nil {
 		return fmt.Errorf("failed to create database: %s", err)
 	}

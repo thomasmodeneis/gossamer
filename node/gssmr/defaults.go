@@ -25,8 +25,8 @@ var (
 	DefaultID = string("gssmr")
 	// DefaultConfig Default toml configuration path
 	DefaultConfig = string("./node/gssmr/config.toml")
-	// DefaultDataDir Default node data directory
-	DefaultDataDir = string("~/.gossamer/gssmr")
+	// DefaultBaseDir Default node data directory
+	DefaultBaseDir = string("~/.gossamer/gssmr")
 
 	// InitConfig
 

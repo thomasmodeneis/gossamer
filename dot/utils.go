@@ -30,7 +30,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// NewTestConfig returns a new test configuration using the provided datadir
+// NewTestConfig returns a new test configuration using the provided base directory
 func NewTestConfig(t *testing.T) *Config {
 	dir := utils.NewTestDir(t)
 
@@ -40,7 +40,7 @@ func NewTestConfig(t *testing.T) *Config {
 		Global: GlobalConfig{
 			Name:    GssmrConfig().Global.Name,
 			ID:      GssmrConfig().Global.ID,
-			DataDir: dir,
+			BaseDir: dir,
 		},
 		Init:    GssmrConfig().Init,
 		Account: GssmrConfig().Account,
@@ -54,7 +54,7 @@ func NewTestConfig(t *testing.T) *Config {
 func NewTestConfigWithFile(t *testing.T) (*Config, *os.File) {
 	cfg := NewTestConfig(t)
 
-	file, err := ioutil.TempFile(cfg.Global.DataDir, "config-")
+	file, err := ioutil.TempFile(cfg.Global.BaseDir, "config-")
 	if err != nil {
 		fmt.Println(fmt.Errorf("failed to create temporary file: %s", err))
 		require.Nil(t, err)

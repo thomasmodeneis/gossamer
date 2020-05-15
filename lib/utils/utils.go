@@ -60,10 +60,10 @@ func ExpandDir(targetPath string) string {
 	return path.Clean(os.ExpandEnv(targetPath))
 }
 
-// DataDir attempts to create a data directory using the given name within the
+// BaseDir attempts to create a data directory using the given name within the
 // gossamer directory within the user's HOME directory, returns absolute path
 // or, if unable to locate HOME directory, returns within current directory
-func DataDir(name string) string {
+func BaseDir(name string) string {
 	home := HomeDir()
 	if home != "" {
 		if runtime.GOOS == "darwin" {
@@ -78,17 +78,17 @@ func DataDir(name string) string {
 }
 
 // KeystoreDir returns the absolute filepath of the keystore directory
-func KeystoreDir(datadir string) (keystorepath string, err error) {
-	// datadir specified, set keystore filepath to absolute path of [datadir]/keystore
-	if datadir != "" {
-		datadir = ExpandDir(datadir)
-		keystorepath, err = filepath.Abs(datadir + "/keystore")
+func KeystoreDir(basedir string) (keystorepath string, err error) {
+	// base directory specified, set keystore filepath to absolute path of [basedir]/keystore
+	if basedir != "" {
+		basedir = ExpandDir(basedir)
+		keystorepath, err = filepath.Abs(basedir + "/keystore")
 		if err != nil {
 			return "", fmt.Errorf("failed to create absolute filepath: %s", err)
 		}
 	}
 
-	// if datadir does not exist, create it
+	// if base directory does not exist, create it
 	if _, err = os.Stat(keystorepath); os.IsNotExist(err) {
 		err = os.Mkdir(keystorepath, os.ModePerm)
 		if err != nil {
@@ -96,7 +96,7 @@ func KeystoreDir(datadir string) (keystorepath string, err error) {
 		}
 	}
 
-	// if datadir/keystore does not exist, create it
+	// if [basedir]/keystore does not exist, create it
 	if _, err = os.Stat(keystorepath); os.IsNotExist(err) {
 		err = os.Mkdir(keystorepath, os.ModePerm)
 		if err != nil {
@@ -107,9 +107,9 @@ func KeystoreDir(datadir string) (keystorepath string, err error) {
 	return keystorepath, nil
 }
 
-// KeystoreFiles returns the filenames of all the keys in the datadir's keystore
-func KeystoreFiles(datadir string) ([]string, error) {
-	keystorepath, err := KeystoreDir(datadir)
+// KeystoreFiles returns the filenames of all the keys in the base directory's keystore
+func KeystoreFiles(basedir string) ([]string, error) {
+	keystorepath, err := KeystoreDir(basedir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get keystore directory: %s", err)
 	}
@@ -131,9 +131,9 @@ func KeystoreFiles(datadir string) ([]string, error) {
 	return keys, nil
 }
 
-// KeystoreFilepaths lists all the keys in the datadir/keystore/ directory and returns them as a list of filepaths
-func KeystoreFilepaths(datadir string) ([]string, error) {
-	keys, err := KeystoreFiles(datadir)
+// KeystoreFilepaths lists all the keys in the basedir/keystore/ directory and returns them as a list of filepaths
+func KeystoreFilepaths(basedir string) ([]string, error) {
+	keys, err := KeystoreFiles(basedir)
 	if err != nil {
 		return nil, err
 	}

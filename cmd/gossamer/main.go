@@ -41,7 +41,7 @@ var (
 		Flags:     ExportFlags,
 		Category:  "EXPORT",
 		Description: "The export command exports configuration values from the command flags to a TOML configuration file.\n" +
-			"\tUsage: gossamer export --config node/test/config.toml --datadir ~/.gossamer/test",
+			"\tUsage: gossamer export --config node/test/config.toml --base-dir ~/.gossamer/test",
 	}
 	// initCommand defines the "init" subcommand (ie, `gossamer init`)
 	initCommand = cli.Command{
@@ -121,10 +121,10 @@ func gossamerAction(ctx *cli.Context) error {
 
 	// expand data directory and update node configuration (performed separately
 	// from createDotConfig because dot config should not include expanded path)
-	cfg.Global.DataDir = utils.ExpandDir(cfg.Global.DataDir)
+	cfg.Global.BaseDir = utils.ExpandDir(cfg.Global.BaseDir)
 
 	// check if node has not been initialized (expected true - add warning log)
-	if !dot.NodeInitialized(cfg.Global.DataDir, true) {
+	if !dot.NodeInitialized(cfg.Global.BaseDir, true) {
 
 		// initialize node (initialize state database and load genesis data)
 		err = dot.InitNode(cfg)
@@ -148,7 +148,7 @@ func gossamerAction(ctx *cli.Context) error {
 		return err
 	}
 
-	err = unlockKeystore(ks, cfg.Global.DataDir, cfg.Account.Unlock, ctx.String(PasswordFlag.Name))
+	err = unlockKeystore(ks, cfg.Global.BaseDir, cfg.Account.Unlock, ctx.String(PasswordFlag.Name))
 	if err != nil {
 		log.Error("[cmd] failed to unlock keystore", "error", err)
 		return err
@@ -185,10 +185,10 @@ func initAction(ctx *cli.Context) error {
 
 	// expand data directory and update node configuration (performed separately
 	// from createDotConfig because dot config should not include expanded path)
-	cfg.Global.DataDir = utils.ExpandDir(cfg.Global.DataDir)
+	cfg.Global.BaseDir = utils.ExpandDir(cfg.Global.BaseDir)
 
 	// check if node has been initialized (expected false - no warning log)
-	if dot.NodeInitialized(cfg.Global.DataDir, false) {
+	if dot.NodeInitialized(cfg.Global.BaseDir, false) {
 
 		// use --force value to force initialize the node
 		force := ctx.Bool(ForceFlag.Name)
@@ -197,12 +197,12 @@ func initAction(ctx *cli.Context) error {
 		if force || confirmMessage("Are you sure you want to reinitialize the node? [Y/n]") {
 			log.Info(
 				"[cmd] reinitializing node...",
-				"datadir", cfg.Global.DataDir,
+				"basedir", cfg.Global.BaseDir,
 			)
 		} else {
 			log.Warn(
 				"[cmd] exiting without reinitializing the node",
-				"datadir", cfg.Global.DataDir,
+				"basedir", cfg.Global.BaseDir,
 			)
 			return nil // exit if reinitialization is not confirmed
 		}

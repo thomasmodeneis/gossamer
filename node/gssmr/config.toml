@@ -1,7 +1,7 @@
 [global]
 name = "gssmr"
 id = "gssmr"
-datadir = "~/.gossamer/gssmr"
+base-dir = "~/.gossamer/gssmr"
 
 [init]
 genesis = "./node/gssmr/genesis.json"

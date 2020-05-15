@@ -68,9 +68,9 @@ var (
 		Name:  "config",
 		Usage: "TOML configuration file",
 	}
-	// DataDirFlag data directory for node
-	DataDirFlag = cli.StringFlag{
-		Name:  "datadir",
+	// BaseDirFlag data directory for node
+	BaseDirFlag = cli.StringFlag{
+		Name:  "base-dir",
 		Usage: "Data directory for the node",
 	}
 )
@@ -184,7 +184,7 @@ var (
 		NameFlag,
 		NodeFlag,
 		ConfigFlag,
-		DataDirFlag,
+		BaseDirFlag,
 	}
 
 	// StartupFlags are flags that are valid for use with the root command and the export subcommand

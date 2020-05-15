@@ -141,7 +141,7 @@ func TestGlobalConfigFromFlags(t *testing.T) {
 			dot.GlobalConfig{
 				Name:    testCfg.Global.Name,
 				ID:      testCfg.Global.ID,
-				DataDir: testCfg.Global.DataDir,
+				BaseDir: testCfg.Global.BaseDir,
 			},
 		},
 		{
@@ -151,7 +151,7 @@ func TestGlobalConfigFromFlags(t *testing.T) {
 			dot.GlobalConfig{
 				Name:    testCfg.Global.Name,
 				ID:      "ksmcc",
-				DataDir: testCfg.Global.DataDir,
+				BaseDir: testCfg.Global.BaseDir,
 			},
 		},
 		{
@@ -161,17 +161,17 @@ func TestGlobalConfigFromFlags(t *testing.T) {
 			dot.GlobalConfig{
 				Name:    "test_name",
 				ID:      testCfg.Global.ID,
-				DataDir: testCfg.Global.DataDir,
+				BaseDir: testCfg.Global.BaseDir,
 			},
 		},
 		{
-			"Test gossamer --datadir",
-			[]string{"config", "datadir"},
-			[]interface{}{testCfgFile.Name(), "test_datadir"},
+			"Test gossamer --base-dir",
+			[]string{"config", "base-dir"},
+			[]interface{}{testCfgFile.Name(), "test_base-dir"},
 			dot.GlobalConfig{
 				Name:    testCfg.Global.Name,
 				ID:      testCfg.Global.ID,
-				DataDir: "test_datadir",
+				BaseDir: "test_base-dir",
 			},
 		},
 		{
@@ -181,7 +181,7 @@ func TestGlobalConfigFromFlags(t *testing.T) {
 			dot.GlobalConfig{
 				Name:    testCfg.Global.Name,
 				ID:      testCfg.Global.ID,
-				DataDir: testCfg.Global.DataDir,
+				BaseDir: testCfg.Global.BaseDir,
 			},
 		},
 	}
@@ -497,7 +497,7 @@ func TestUpdateConfigFromGenesisJSON(t *testing.T) {
 		Global: dot.GlobalConfig{
 			Name:    testCfg.Global.Name,
 			ID:      testCfg.Global.ID,
-			DataDir: testCfg.Global.DataDir,
+			BaseDir: testCfg.Global.BaseDir,
 		},
 		Init: dot.InitConfig{
 			Genesis: genFile.Name(),
@@ -537,7 +537,7 @@ func TestUpdateConfigFromGenesisJSON_Default(t *testing.T) {
 		Global: dot.GlobalConfig{
 			Name:    testCfg.Global.Name,
 			ID:      testCfg.Global.ID,
-			DataDir: testCfg.Global.DataDir,
+			BaseDir: testCfg.Global.BaseDir,
 		},
 		Init: dot.InitConfig{
 			Genesis: DefaultCfg.Init.Genesis,
@@ -573,7 +573,7 @@ func TestUpdateConfigFromGenesisData(t *testing.T) {
 		Global: dot.GlobalConfig{
 			Name:    testCfg.Global.Name,
 			ID:      testCfg.Global.ID,
-			DataDir: testCfg.Global.DataDir,
+			BaseDir: testCfg.Global.BaseDir,
 		},
 		Init: dot.InitConfig{
 			Genesis: genFile.Name(),
@@ -595,7 +595,7 @@ func TestUpdateConfigFromGenesisData(t *testing.T) {
 
 	cfg.Init.Genesis = genFile.Name()
 
-	db, err := database.NewBadgerDB(cfg.Global.DataDir)
+	db, err := database.NewBadgerDB(cfg.Global.BaseDir)
 	require.Nil(t, err)
 
 	gen, err := genesis.NewGenesisFromJSON(genFile.Name())

@@ -297,7 +297,7 @@ func TestImportKey_ShouldFail(t *testing.T) {
 }
 
 func TestImportKey(t *testing.T) {
-	dataDir := utils.NewTestDataDir(t, "keystore")
+	dataDir := utils.NewTestBaseDir(t, "keystore")
 	defer utils.RemoveTestDir(t)
 
 	keypath := dataDir

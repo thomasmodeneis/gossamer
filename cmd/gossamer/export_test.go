@@ -52,14 +52,14 @@ func TestExportCommand(t *testing.T) {
 		expected    *dot.Config
 	}{
 		{
-			"Test gossamer export --config --genesis --datadir --name --verbosity",
-			[]string{"config", "genesis", "datadir", "name", "verbosity"},
+			"Test gossamer export --config --genesis --base-dir --name --verbosity",
+			[]string{"config", "genesis", "base-dir", "name", "verbosity"},
 			[]interface{}{testConfig, genFile.Name(), testDir, testName, "trace"},
 			&dot.Config{
 				Global: dot.GlobalConfig{
 					Name:    testName,
 					ID:      testCfg.Global.ID,
-					DataDir: testCfg.Global.DataDir,
+					BaseDir: testCfg.Global.BaseDir,
 				},
 				Init: dot.InitConfig{
 					Genesis: genFile.Name(),
