@@ -43,8 +43,8 @@ func NewTestDir(t *testing.T) string {
 	return testDir
 }
 
-// NewTestBaseDir create new test data directory
-func NewTestBaseDir(t *testing.T, name string) string {
+// NewTestBasePath create new test data directory
+func NewTestBasePath(t *testing.T, name string) string {
 	testDir := path.Join(TestDir, t.Name())
 	dataDir := path.Join(testDir, name)
 

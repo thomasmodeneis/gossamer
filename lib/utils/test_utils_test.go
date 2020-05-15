@@ -35,11 +35,11 @@ func TestNewTestDir(t *testing.T) {
 	RemoveTestDir(t)
 }
 
-// TestNewTestBaseDir tests the NewTestBaseDir method
-func TestNewTestBaseDir(t *testing.T) {
+// TestNewTestBasePath tests the NewTestBasePath method
+func TestNewTestBasePath(t *testing.T) {
 	dataDir := "test"
 
-	testDir := NewTestBaseDir(t, dataDir)
+	testDir := NewTestBasePath(t, dataDir)
 
 	expected := path.Join(TestDir, t.Name(), dataDir)
 

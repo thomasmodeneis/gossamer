@@ -51,7 +51,7 @@ func InitNode(cfg *Config) error {
 		"[dot] initializing node...",
 		"name", cfg.Global.Name,
 		"id", cfg.Global.ID,
-		"basedir", cfg.Global.BaseDir,
+		"basepath", cfg.Global.BasePath,
 		"genesis", cfg.Init.Genesis,
 	)
 
@@ -74,7 +74,7 @@ func InitNode(cfg *Config) error {
 	}
 
 	// create new state service
-	stateSrvc := state.NewService(cfg.Global.BaseDir)
+	stateSrvc := state.NewService(cfg.Global.BasePath)
 
 	// declare genesis data
 	data := gen.GenesisData()
@@ -98,7 +98,7 @@ func InitNode(cfg *Config) error {
 		"[dot] node initialized",
 		"name", cfg.Global.Name,
 		"id", cfg.Global.ID,
-		"basedir", cfg.Global.BaseDir,
+		"basepath", cfg.Global.BasePath,
 		"genesis", cfg.Init.Genesis,
 		"block", header.Number,
 	)
@@ -108,16 +108,16 @@ func InitNode(cfg *Config) error {
 
 // NodeInitialized returns true if, within the configured data directory for the
 // node, the state database has been created and the genesis data has been loaded
-func NodeInitialized(basedir string, expected bool) bool {
+func NodeInitialized(basepath string, expected bool) bool {
 
 	// check if key registry exists
-	registry := path.Join(basedir, "KEYREGISTRY")
+	registry := path.Join(basepath, "KEYREGISTRY")
 	_, err := os.Stat(registry)
 	if os.IsNotExist(err) {
 		if expected {
 			log.Warn(
 				"[dot] node has not been initialized",
-				"basedir", basedir,
+				"basepath", basepath,
 				"error", "failed to locate KEYREGISTRY file in data directory",
 			)
 		}
@@ -125,13 +125,13 @@ func NodeInitialized(basedir string, expected bool) bool {
 	}
 
 	// check if manifest exists
-	manifest := path.Join(basedir, "MANIFEST")
+	manifest := path.Join(basepath, "MANIFEST")
 	_, err = os.Stat(manifest)
 	if os.IsNotExist(err) {
 		if expected {
 			log.Warn(
 				"[dot] node has not been initialized",
-				"basedir", basedir,
+				"basepath", basepath,
 				"error", "failed to locate MANIFEST file in data directory",
 			)
 		}
@@ -139,11 +139,11 @@ func NodeInitialized(basedir string, expected bool) bool {
 	}
 
 	// initialize database using data directory
-	db, err := database.NewBadgerDB(basedir)
+	db, err := database.NewBadgerDB(basepath)
 	if err != nil {
 		log.Error(
 			"[dot] failed to create database",
-			"basedir", basedir,
+			"basepath", basepath,
 			"error", err,
 		)
 		return false
@@ -154,7 +154,7 @@ func NodeInitialized(basedir string, expected bool) bool {
 	if err != nil {
 		log.Warn(
 			"[dot] node has not been initialized",
-			"basedir", basedir,
+			"basepath", basepath,
 			"error", err,
 		)
 		return false
@@ -183,7 +183,7 @@ func NewNode(cfg *Config, ks *keystore.Keystore) (*Node, error) {
 		"[dot] initializing node services...",
 		"name", cfg.Global.Name,
 		"id", cfg.Global.ID,
-		"basedir", cfg.Global.BaseDir,
+		"basepath", cfg.Global.BasePath,
 	)
 
 	var nodeSrvcs []services.Service

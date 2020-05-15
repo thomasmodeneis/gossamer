@@ -1,10 +1,10 @@
 [global]
 name = "gssmr"
 id = "gssmr"
-base-dir = "~/.gossamer/gssmr"
+base-path = "~/.gossamer/gssmr"
 
 [init]
-genesis = "./node/gssmr/genesis.json"
+genesis = "./chain/gssmr/genesis.json"
 
 [account]
 key = ""

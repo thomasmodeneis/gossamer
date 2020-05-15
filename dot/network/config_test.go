@@ -32,7 +32,7 @@ func TestBuildIdentity(t *testing.T) {
 	defer utils.RemoveTestDir(t)
 
 	configA := &Config{
-		BaseDir: testDir,
+		BasePath: testDir,
 	}
 
 	err := configA.buildIdentity()
@@ -41,7 +41,7 @@ func TestBuildIdentity(t *testing.T) {
 	}
 
 	configB := &Config{
-		BaseDir: testDir,
+		BasePath: testDir,
 	}
 
 	err = configB.buildIdentity()
@@ -78,7 +78,7 @@ func TestBuildIdentity(t *testing.T) {
 
 // test build configuration method
 func TestBuild(t *testing.T) {
-	testBaseDir := utils.NewTestBaseDir(t, "node")
+	testBasePath := utils.NewTestBasePath(t, "node")
 	defer utils.RemoveTestDir(t)
 
 	testBlockState := &state.BlockState{}
@@ -89,7 +89,7 @@ func TestBuild(t *testing.T) {
 	cfg := &Config{
 		BlockState:   testBlockState,
 		NetworkState: testNetworkState,
-		BaseDir:      testBaseDir,
+		BasePath:      testBasePath,
 		RandSeed:     testRandSeed,
 	}
 
@@ -100,7 +100,7 @@ func TestBuild(t *testing.T) {
 
 	require.Equal(t, testBlockState, cfg.BlockState)
 	require.Equal(t, testNetworkState, cfg.NetworkState)
-	require.Equal(t, testBaseDir, cfg.BaseDir)
+	require.Equal(t, testBasePath, cfg.BasePath)
 	require.Equal(t, DefaultRoles, cfg.Roles)
 	require.Equal(t, DefaultPort, cfg.Port)
 	require.Equal(t, testRandSeed, cfg.RandSeed)

@@ -24,8 +24,8 @@ import (
 	"reflect"
 	"unicode"
 
-	"github.com/ChainSafe/gossamer/node/gssmr"
-	"github.com/ChainSafe/gossamer/node/ksmcc"
+	"github.com/ChainSafe/gossamer/chain/gssmr"
+	"github.com/ChainSafe/gossamer/chain/ksmcc"
 
 	log "github.com/ChainSafe/log15"
 	"github.com/naoina/toml"
@@ -45,7 +45,7 @@ type Config struct {
 type GlobalConfig struct {
 	Name    string `toml:"name"`
 	ID      string `toml:"id"`
-	BaseDir string `toml:"base-dir"`
+	BasePath string `toml:"base-path"`
 }
 
 // InitConfig is the configuration for the node initialization
@@ -105,7 +105,7 @@ func GssmrConfig() *Config {
 		Global: GlobalConfig{
 			Name:    gssmr.DefaultName,
 			ID:      gssmr.DefaultID,
-			BaseDir: gssmr.DefaultBaseDir,
+			BasePath: gssmr.DefaultBasePath,
 		},
 		Init: InitConfig{
 			Genesis: gssmr.DefaultGenesis,
@@ -140,7 +140,7 @@ func KsmccConfig() *Config {
 		Global: GlobalConfig{
 			Name:    ksmcc.DefaultName,
 			ID:      ksmcc.DefaultID,
-			BaseDir: ksmcc.DefaultBaseDir,
+			BasePath: ksmcc.DefaultBasePath,
 		},
 		Init: InitConfig{
 			Genesis: ksmcc.DefaultGenesis,

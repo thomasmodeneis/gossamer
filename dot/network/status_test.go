@@ -29,7 +29,7 @@ var TestStatusTimeout = time.Second
 
 // test exchange status messages after peer connected
 func TestStatus(t *testing.T) {
-	dataDirA := utils.NewTestBaseDir(t, "nodeA")
+	dataDirA := utils.NewTestBasePath(t, "nodeA")
 
 	// removes all data directories created within test directory
 	defer utils.RemoveTestDir(t)
@@ -37,7 +37,7 @@ func TestStatus(t *testing.T) {
 	msgRecA := make(chan Message)
 
 	configA := &Config{
-		BaseDir:     dataDirA,
+		BasePath:     dataDirA,
 		Port:        7001,
 		RandSeed:    1,
 		NoBootstrap: true,
@@ -73,12 +73,12 @@ func TestStatus(t *testing.T) {
 	// simulate host status message sent from core service on startup
 	msgRecA <- testStatusMessage
 
-	dataDirB := utils.NewTestBaseDir(t, "nodeB")
+	dataDirB := utils.NewTestBasePath(t, "nodeB")
 
 	msgRecB := make(chan Message)
 
 	configB := &Config{
-		BaseDir:     dataDirB,
+		BasePath:     dataDirB,
 		Port:        7002,
 		RandSeed:    2,
 		NoBootstrap: true,

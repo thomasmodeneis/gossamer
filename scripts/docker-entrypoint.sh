@@ -22,7 +22,7 @@ BASE_DIR=~/gossamer-dev
 set -euxo pipefail
 
 if [ ! -f $BASE_DIR/genesis_created ]; then
-	/usr/local/gossamer init --genesis=/gocode/src/github.com/ChainSafe/gossamer/node/gssmr/genesis.json
+	/usr/local/gossamer init --genesis=/gocode/src/github.com/ChainSafe/gossamer/chain/gssmr/genesis.json
 	touch $BASE_DIR/genesis_created;
 fi;
 

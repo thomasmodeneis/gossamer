@@ -63,13 +63,13 @@ func TestNodeInitialized(t *testing.T) {
 
 	cfg.Init.Genesis = genFile.Name()
 
-	expected := NodeInitialized(cfg.Global.BaseDir, false)
+	expected := NodeInitialized(cfg.Global.BasePath, false)
 	require.Equal(t, expected, false)
 
 	err := InitNode(cfg)
 	require.Nil(t, err)
 
-	expected = NodeInitialized(cfg.Global.BaseDir, true)
+	expected = NodeInitialized(cfg.Global.BasePath, true)
 	require.Equal(t, expected, true)
 }
 
@@ -150,7 +150,7 @@ func TestInitNode_LoadGenesisData(t *testing.T) {
 	err := InitNode(cfg)
 	require.Nil(t, err)
 
-	stateSrvc := state.NewService(cfg.Global.BaseDir)
+	stateSrvc := state.NewService(cfg.Global.BasePath)
 
 	header := &types.Header{
 		Number:         big.NewInt(0),

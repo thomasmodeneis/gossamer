@@ -29,7 +29,7 @@ func TestAccountGenerate(t *testing.T) {
 
 	ctx, err := newTestContext(
 		"Test gossamer account --generate",
-		[]string{"base-dir", "generate"},
+		[]string{"base-path", "generate"},
 		[]interface{}{testDir, "true"},
 	)
 	if err != nil {
@@ -52,7 +52,7 @@ func TestAccountGeneratePassword(t *testing.T) {
 
 	ctx, err := newTestContext(
 		"Test gossamer account --generate --password",
-		[]string{"base-dir", "generate", "password"},
+		[]string{"base-path", "generate", "password"},
 		[]interface{}{testDir, "true", "1234"},
 	)
 	if err != nil {
@@ -75,7 +75,7 @@ func TestAccountGenerateType(t *testing.T) {
 
 	ctx, err := newTestContext(
 		"Test gossamer account --generate --type",
-		[]string{"base-dir", "generate", "type"},
+		[]string{"base-path", "generate", "type"},
 		[]interface{}{testDir, "true", "ed25519"},
 	)
 	if err != nil {
@@ -98,7 +98,7 @@ func TestAccountImport(t *testing.T) {
 
 	ctx, err := newTestContext(
 		"Test gossamer account --import",
-		[]string{"base-dir", "import"},
+		[]string{"base-path", "import"},
 		[]interface{}{testDir, "testfile"},
 	)
 	if err != nil {
@@ -121,7 +121,7 @@ func TestAccountList(t *testing.T) {
 
 	ctx, err := newTestContext(
 		"Test gossamer account --list",
-		[]string{"base-dir", "list"},
+		[]string{"base-path", "list"},
 		[]interface{}{testDir, "true"},
 	)
 	if err != nil {

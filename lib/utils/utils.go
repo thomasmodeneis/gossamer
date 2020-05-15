@@ -60,10 +60,10 @@ func ExpandDir(targetPath string) string {
 	return path.Clean(os.ExpandEnv(targetPath))
 }
 
-// BaseDir attempts to create a data directory using the given name within the
+// BasePath attempts to create a data directory using the given name within the
 // gossamer directory within the user's HOME directory, returns absolute path
 // or, if unable to locate HOME directory, returns within current directory
-func BaseDir(name string) string {
+func BasePath(name string) string {
 	home := HomeDir()
 	if home != "" {
 		if runtime.GOOS == "darwin" {
@@ -78,11 +78,11 @@ func BaseDir(name string) string {
 }
 
 // KeystoreDir returns the absolute filepath of the keystore directory
-func KeystoreDir(basedir string) (keystorepath string, err error) {
-	// base directory specified, set keystore filepath to absolute path of [basedir]/keystore
-	if basedir != "" {
-		basedir = ExpandDir(basedir)
-		keystorepath, err = filepath.Abs(basedir + "/keystore")
+func KeystoreDir(basepath string) (keystorepath string, err error) {
+	// base directory specified, set keystore filepath to absolute path of [basepath]/keystore
+	if basepath != "" {
+		basepath = ExpandDir(basepath)
+		keystorepath, err = filepath.Abs(basepath + "/keystore")
 		if err != nil {
 			return "", fmt.Errorf("failed to create absolute filepath: %s", err)
 		}
@@ -96,7 +96,7 @@ func KeystoreDir(basedir string) (keystorepath string, err error) {
 		}
 	}
 
-	// if [basedir]/keystore does not exist, create it
+	// if [basepath]/keystore does not exist, create it
 	if _, err = os.Stat(keystorepath); os.IsNotExist(err) {
 		err = os.Mkdir(keystorepath, os.ModePerm)
 		if err != nil {
@@ -108,8 +108,8 @@ func KeystoreDir(basedir string) (keystorepath string, err error) {
 }
 
 // KeystoreFiles returns the filenames of all the keys in the base directory's keystore
-func KeystoreFiles(basedir string) ([]string, error) {
-	keystorepath, err := KeystoreDir(basedir)
+func KeystoreFiles(basepath string) ([]string, error) {
+	keystorepath, err := KeystoreDir(basepath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get keystore directory: %s", err)
 	}
@@ -131,9 +131,9 @@ func KeystoreFiles(basedir string) ([]string, error) {
 	return keys, nil
 }
 
-// KeystoreFilepaths lists all the keys in the basedir/keystore/ directory and returns them as a list of filepaths
-func KeystoreFilepaths(basedir string) ([]string, error) {
-	keys, err := KeystoreFiles(basedir)
+// KeystoreFilepaths lists all the keys in the basepath/keystore/ directory and returns them as a list of filepaths
+func KeystoreFilepaths(basepath string) ([]string, error) {
+	keys, err := KeystoreFiles(basepath)
 	if err != nil {
 		return nil, err
 	}
@@ -147,8 +147,8 @@ func KeystoreFilepaths(basedir string) ([]string, error) {
 
 // GetGssmrGenesisPath gets the gssmr genesis path
 func GetGssmrGenesisPath() string {
-	path1 := "../node/gssmr/genesis.json"
-	path2 := "../../node/gssmr/genesis.json"
+	path1 := "../chain/gssmr/genesis.json"
+	path2 := "../../chain/gssmr/genesis.json"
 
 	var fp string
 
@@ -163,8 +163,8 @@ func GetGssmrGenesisPath() string {
 
 // GetKsmccGenesisPath gets the ksmcc genesis path
 func GetKsmccGenesisPath() string {
-	path1 := "../node/ksmcc/genesis.json"
-	path2 := "../../node/ksmcc/genesis.json"
+	path1 := "../chain/ksmcc/genesis.json"
+	path2 := "../../chain/ksmcc/genesis.json"
 
 	var fp string
 

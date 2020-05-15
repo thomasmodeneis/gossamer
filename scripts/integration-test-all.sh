@@ -40,7 +40,7 @@ done
 
 set -euxo pipefail
 
-BASE_DIR=$(mktemp -d -t gossamer-base-dir.XXXXX)
+BASE_DIR=$(mktemp -d -t gossamer-base-path.XXXXX)
 
 if [[ ! "$BASE_DIR" ]]; then
   echo "Could not create $BASE_DIR"
@@ -56,8 +56,8 @@ arr=()
 
 start_func() {
   echo "starting gossamer node $i in background ..."
-  "$PWD"/bin/gossamer --port=$(($PORT + $i)) --key=$KEY --base-dir="$BASE_DIR$i" \
-    --rpc --rpchost=$HOSTNAME --rpcport=$(($RPC_PORT + $i)) --rpcmods=system,author,chain >"$BASE_DIR"/node"$i".log 2>&1 & disown
+  "$PWD"/bin/gossamer --port=$(($PORT + $i)) --key=$KEY --base-path="$BASE_DIR$i" \
+    --rpc --rpchost=$HOSTNAME --rpcport=$(($RPC_PORT + $i)) --rpcmods=system,author,chain >"$BASE_DIR"/chain"$i".log 2>&1 & disown
 
   GOSSAMER_PID=$!
   echo "started gossamer node, pid=$GOSSAMER_PID"

@@ -25,7 +25,7 @@ import (
 
 // test gossip messages to connected peers
 func TestGossip(t *testing.T) {
-	dataDirA := utils.NewTestBaseDir(t, "nodeA")
+	dataDirA := utils.NewTestBasePath(t, "nodeA")
 
 	// removes all data directories created within test directory
 	defer utils.RemoveTestDir(t)
@@ -33,7 +33,7 @@ func TestGossip(t *testing.T) {
 	msgSendA := make(chan Message)
 
 	configA := &Config{
-		BaseDir:     dataDirA,
+		BasePath:     dataDirA,
 		Port:        7001,
 		RandSeed:    1,
 		NoBootstrap: true,
@@ -46,12 +46,12 @@ func TestGossip(t *testing.T) {
 
 	nodeA.noStatus = true
 
-	dataDirB := utils.NewTestBaseDir(t, "nodeB")
+	dataDirB := utils.NewTestBasePath(t, "nodeB")
 
 	msgSendB := make(chan Message)
 
 	configB := &Config{
-		BaseDir:     dataDirB,
+		BasePath:     dataDirB,
 		Port:        7002,
 		RandSeed:    2,
 		NoBootstrap: true,
@@ -79,12 +79,12 @@ func TestGossip(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	dataDirC := utils.NewTestBaseDir(t, "nodeC")
+	dataDirC := utils.NewTestBasePath(t, "nodeC")
 
 	msgSendC := make(chan Message)
 
 	configC := &Config{
-		BaseDir:     dataDirC,
+		BasePath:     dataDirC,
 		Port:        7003,
 		RandSeed:    3,
 		NoBootstrap: true,
